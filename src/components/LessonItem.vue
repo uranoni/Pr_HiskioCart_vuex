@@ -4,11 +4,12 @@
     <span class="title">{{lesson.title}}</span>
     <span class="price">{{lesson.price}}</span>
     <span class="teachers">{{teachers}}</span>
-    <div class="buy">加入購物車</div>
+    <div class="buy" @click="addToCart(lesson)">加入購物車</div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   props: ["lesson"],
   computed: {
@@ -20,6 +21,9 @@ export default {
         backgroundImage: `url('${this.lesson.cover}')`
       };
     }
+  },
+  methods: {
+    ...mapMutations(["addToCart"])
   }
 };
 </script>

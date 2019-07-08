@@ -4,15 +4,25 @@
     <span class="title">{{lesson.title}}</span>
     <span class="price">{{lesson.price}}</span>
     <span class="teachers">{{teachers}}</span>
-    <div class="buy" @click="addToCart(lesson)">加入購物車</div>
+    <div :class="btnClass" @click="addToCart(lesson)">{{btnLabel}}</div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 export default {
   props: ["lesson"],
   computed: {
+    ...mapGetters(["isLessonInCart"]),
+    btnClass() {
+      return {
+        buy: true,
+        bought: this.isLessonInCart(this.lesson)
+      };
+    },
+    btnLabel() {
+      return this.isLessonInCart(this.lesson) ? "以加入購物車" : "加入購物車";
+    },
     teachers() {
       return this.lesson.teachers.map(t => t.username).join(", ");
     },
